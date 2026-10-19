@@ -17,12 +17,18 @@ def inputchk(message):
         except ValueError:
             print("輸入錯誤，請重新輸入數字！")
         
-def input_expenses_index(message,expenses):
-    index = inputchk(message)
+def input_expid(message):
+    expid = inputchk(message)
+    return expid
+
+def find_exp_by_id(expid, expenses):
     while True:
-        if 0 < index <= len(expenses):
-            return index-1
-        index = inputchk("輸入錯誤，請輸入小於已有的編號！")
+        for expense in expenses:
+            if expense.expid == expid:
+                return expense
+        expid = input_expid("請輸入已存在的編號：")
+        
+    
 
 def confirm(message):
     while True:

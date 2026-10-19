@@ -1,4 +1,4 @@
-from .storage import load_data, save_data
+from .storage import load_data, insert_expense, del_exp_from_db
 from .utils import inputchk
 from .expense_tracker import ExpenseTracker
 
@@ -28,14 +28,20 @@ def main():
     while True : 
         choose = menu()
         if choose == 1:
-            if tracker.add_expense():
-                save_data(tracker.expenses)
+            expadd = tracker.add_expense()
+            if expadd is None :
+                continue
+            insert_expense(expadd)
+            tracker.expenses.append(expadd)
+
         elif choose == 2:            
             if not tracker.has_expenses():
                 continue
             tracker.show_expenses()
-            if tracker.delete_expense():
-                save_data(tracker.expenses)
+            tracker.delete_expense()
+
+
+
         elif choose == 3:
             if not tracker.has_expenses():
                 continue
@@ -48,9 +54,12 @@ def main():
                 continue
             tracker.show_expenses()
             print("\n")
+
         elif choose == 5:
             print(f"總支出為 : {tracker.total}\n")
+
         elif choose == 6:
             break
+
 if __name__ == "__main__":
     main()
